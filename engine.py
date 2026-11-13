@@ -1,4 +1,5 @@
 import json as J,os as O,sys as Y,urllib.request as R,base64 as B
+Y.setrecursionlimit(10000)
 U=O.environ.get("MAKEFUN_ENV_URL")or Y.exit("no env")
 T=[x-128 for x in B.b85decode(b"fPjF2fPjF2g^G%7Y>JA7g?n~@fOdO@fPjFMlz@PMg@uZlnTmylii(t;o|KA;va+(Wva+(WfPjF2fPjF2PFP}MVq#cMSZsiRfPidRVugy2kBWt2Vt|j7l#hU7Vug>Cl#hjCVt|T|kBWd|SZsiRfPidRPFP}MVq#cMY<6~bc6N4bc7=d|fPjT|c8ZFMii(PMc7TeCii&`Cc7=tCiiL%Cc7TP7iiLo7c7T9@fPjE@Y<6~bc6N4bfPjF7g@Ay7dw_s|fPjE|dw_s|fPjE|dw_s|fPjE|dw_s|fPjE|dw_s|fPjE|g^G%bii(PbfPjF2fPjF2Y<6~gdv<ngc7TO|fPjE@c7=t7g@u52fPjUCg@u57dw_+7g@u57c7TP2g@u52c7T9@fPjE@Y<6~gdv<ngl%9%!fQp`!l$3ygfPj>gc5G~HY;0_HY+_<qSYl#qVpv#CPFPrCVpv#CPFPrCVpv#CPFPrCVpv#CPFPrCPGVwWVq#)WVq$=RfPi9RVs@0Co|JZCVs@UWsGfFWVs@UWsGfFWVs@0Co|JZCVr+JRfOc$RPFP}WY+_hW")]
 V=(100,320,330,500,900,0)
@@ -272,6 +273,8 @@ def qs(a,be,ply):
  nd+=1
  if nd>MA:
   raise TimeoutError
+ if ply>64:
+  return ev()
  w=sd==1
  inch=at(ks(w),not w)
  st=ev()
