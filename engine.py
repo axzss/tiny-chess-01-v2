@@ -271,7 +271,7 @@ def qs(a,be,ply):
  global nd
  nd+=1
  if nd>MA:
-  return ev()
+  raise TimeoutError
  w=sd==1
  inch=at(ks(w),not w)
  st=ev()
@@ -309,7 +309,7 @@ def sr(a,be,d,ply):
   return qs(a,be,ply)
  nd+=1
  if nd>MA:
-  return ev()
+  raise TimeoutError
  k=key()
  e=TT.get(k)
  if e and e[0]>=d:
@@ -349,15 +349,12 @@ def sr(a,be,d,ply):
    return -800000
   return -HI[(b[m&127]*128)+((m>>7)&127)]
  ms.sort(key=ord)
- se=ev() if not inch else 0
  best=-99999
  bm=0
  fl=2
  n=0
  for m in ms:
   c=b[(m>>7)&127]
-  if not inch and d<=2 and not c and not((m>>14)&7) and n>0 and se+150*d<a:
-   continue
   u=mk(m)
   if at(ks(w),not w):
    un(m,u)
@@ -365,7 +362,7 @@ def sr(a,be,d,ply):
   rk=key()
   rep=rk in PH or rk in RP
   if rep:
-   sc=-25 if se>0 else (25 if se<0 else 0)
+   sc=0
    un(m,u)
    if sc>=be:
     return be
@@ -378,8 +375,8 @@ def sr(a,be,d,ply):
    sc=-sr(-be,-a,d-1,ply+1)
   else:
    rd=d-2 if d>=3 and n>=4 and not c and not((m>>14)&7) else d-1
-   sc=-sr(-be,-a,rd,ply+1)
-   if rd<d-1 and sc>a:
+   sc=-sr(-a-1,-a,rd,ply+1)
+   if sc>a and sc<be:
     sc=-sr(-be,-a,d-1,ply+1)
   RP.pop()
   un(m,u)
@@ -410,9 +407,11 @@ def rt():
  global nd
  bm=0
  nd=0
+ RP.clear()
  for d in range(1,64):
-  sc=sr(-99999,99999,d,0)
-  if nd>MA:
+  try:
+   sc=sr(-99999,99999,d,0)
+  except TimeoutError:
    break
   if sc>-99990:
    bm=BM
