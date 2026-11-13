@@ -7,7 +7,7 @@ KG=(1,16,-1,-16,15,17,-15,-17)
 DG=KG[4:]
 RT=KG[:4]
 SQ=tuple(s for s in range(128)if not s&0x88)
-MA=40000
+MA=100000
 b=bytearray(128)
 sd=1
 ca=0
@@ -267,10 +267,6 @@ def ev():
  return s if sd==1 else -s
 def key():
  return(bytes(b),sd,ca,ep)
-def see(s,t):
- a=b[s]
- v=V[(b[t]-1)%6] if b[t] else 0
- return v>=V[(a-1)%6]-50
 def qs(a,be,ply):
  global nd
  nd+=1
@@ -291,8 +287,6 @@ def qs(a,be,ply):
  fd=False
  for m in ms:
   if not inch and not b[(m>>7)&127] and not((m>>14)&7):
-   continue
-  if b[(m>>7)&127] and not see(m&127,(m>>7)&127) and not inch:
    continue
   u=mk(m)
   if at(ks(w),not w):
